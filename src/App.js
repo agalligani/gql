@@ -1,26 +1,108 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import MainNav from "./components/MainNav/MainNav";
+import { AllPost, PostForm, PostEditor, PostsByTerm } from "./components/Posts";
+// import ImageUpload from "./components/ImageUpload/ImageUpload";
+import UserApp from "./components/User/UserApp";
+import { connect } from "react-redux";
+import UserDeets from "./components/User/UserDeets";
 
-function App() {
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <MainNav
+          isAuthenticated={
+            this.props.state.user.login_status === 200 ? true : false
+          }
+        />
+        <Route path="/home" render={() => <h2>Hi</h2>} />
+        <div>
+          <Switch>
+            <Route path="/welcome">
+              {() => {
+                return (
+                  <Fragment>
+                    <UserDeets />
+                  </Fragment>
+                );
+              }}
+            </Route>
+            <PrivateRoute
+              path="/addpost"
+              login_status={this.props.state.user.login_status}
+            >
+              <PostForm />
+            </PrivateRoute>
+            <Route path="/login">
+              {() => {
+                return <UserApp />;
+              }}
+            </Route>
+            <Route path="/posts">
+              {() => {
+                return <AllPost />;
+              }}
+            </Route>
+            <Route path="/postsbyterm">
+              {() => {
+                return <PostsByTerm />;
+              }}
+            </Route>
+            <Route path="/post/:nid/:action">
+              <PostEditor />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    );
+  }
+}
+
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    fakeAuth.isAuthenticated = true;
+    setTimeout(cb, 100); // fake async
+  },
+  signout(cb) {
+    fakeAuth.isAuthenticated = false;
+    setTimeout(cb, 100);
+  },
+};
+
+// A wrapper for <Route> that redirects to the login
+// screen if you're not yet authenticated.
+function PrivateRoute({ children, ...rest }) {
+  let isAuthenticated = rest.login_status === 200 ? true : false;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Route
+      {...rest}
+      render={({ location }) => {
+        return isAuthenticated ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location },
+            }}
+          />
+        );
+      }}
+    />
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    state: state,
+  };
+};
+
+export default connect(mapStateToProps)(App);
