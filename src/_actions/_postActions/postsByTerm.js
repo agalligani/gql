@@ -17,7 +17,8 @@ export const receivePostsByTerm = (data) => ({
 export function fetchPostsByTerm(payload) {
   return function (dispatch) {
     dispatch(requestPostsByTerm(payload));
-    return articleListByTerm.then(({ data }) =>
+    let gqlQuery = articleListByTerm("thiphif", "tags", 0, 10, "article");
+    return gqlQuery.then(({ data }) =>
       dispatch(receivePostsByTerm(data.nodeQuery.entities))
     );
   };

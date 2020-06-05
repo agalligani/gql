@@ -8,7 +8,6 @@ export const RECEIVE_TAGS = "RECEIVE_TAGS";
 export const RECEIVE_TAGS_JSON = "RECEIVE_TAGS_JSON";
 export const SET_CURRENT_TERM = "SET_CURRENT_TERM";
 
-//************************* READ ACTIONS **************/
 export const initializeTags = () => ({
   type: INITIALIZE_TAGS,
 });
@@ -34,22 +33,5 @@ export function fetchTags() {
     return taxonomyList.then(({ data }) => {
       dispatch(receiveTags(data.taxonomyTermQuery.entities));
     });
-  };
-}
-
-export function fetchTagsJSON(nid) {
-  return function (dispatch) {
-    dispatch(initializeTags());
-    /* @TODO -- taxonomyList should receive a VID or VOCAB title */
-    return taxonomyList
-      .then(
-        (response) => response.json(),
-        (error) => console.log("An error occurred.", error)
-      )
-      .then((tags_array) => {
-        console.log("===>", tags_array);
-
-        dispatch(receiveTagsJSON(tags_array));
-      });
   };
 }

@@ -1,90 +1,69 @@
 import gqlClient from "../gqlClient";
 import { gql } from "apollo-boost";
-/** ./graphql/queries/articleListByTaxonomy.js */
-const bundle = "article";
-const PUBLISHED = "1";
-let vocabulary = "tags";
-let term = "thiphif";
-export const articleListByTerm = gqlClient.query({
-  query: gql`
-    {
-      nodeQuery(
-        limit: 10
-        offset: 0
-        filter: {
-          conditions: [
-            { operator: EQUAL, field: "type", value: ["article"] }
-            { operator: EQUAL, field: "status", value: ["1"] }
-            { operator: EQUAL, field: "field_tags.entity.vid", value: ["tags"] }
-            {
-              operator: EQUAL
-              field: "field_tags.entity.name"
-              value: ["thiphif"]
-            }
-          ]
-        }
+
+export const articleListByTerm = (
+  term,
+  vocab = "tags",
+  offset = 0,
+  limit = 10,
+  type = "article"
+) => {
+  return gqlClient.query({
+    variables: {
+      term: term,
+      vocab: vocab,
+      offset: offset,
+      limit: limit,
+      type: type,
+    },
+    query: gql`
+      query(
+        $term: String!
+        $vocab: String!
+        $offset: Int!
+        $limit: Int!
+        $type: String!
       ) {
-        entities {
-          entityLabel
-          entityBundle
-          ... on NodeArticle {
-            body {
-              value
-            }
-            fieldImage {
-              url
-            }
-            queryFieldTags {
-              entities {
-                entityId
-                entityLabel
+        nodeQuery(
+          offset: $offset
+          limit: $limit
+          filter: {
+            conditions: [
+              { operator: EQUAL, field: "type", value: [$type] }
+              { operator: EQUAL, field: "status", value: ["1"] }
+              {
+                operator: EQUAL
+                field: "field_tags.entity.vid"
+                value: [$vocab]
+              }
+              {
+                operator: EQUAL
+                field: "field_tags.entity.name"
+                value: [$term]
+              }
+            ]
+          }
+        ) {
+          entities {
+            entityLabel
+            entityBundle
+            ... on NodeArticle {
+              body {
+                value
+              }
+              fieldImage {
+                url
+              }
+              queryFieldTags {
+                entities {
+                  entityId
+                  entityLabel
+                }
               }
             }
           }
         }
       }
-    }
-  `,
-});
-
-//     {
-//       nodeQuery(
-//         limit: 10
-//         offset: 0
-//         filter: {
-//           conditions: [
-//             { operator: EQUAL, field: "type", value: [${bundle}] }
-//             { operator: EQUAL, field: "status", value: [${PUBLISHED}] }
-//             { operator: EQUAL, field: "field_tags.entity.vid", value: [${vocabulary}] }
-//             {
-//               operator: EQUAL
-//               field: "field_${vocabulary}.entity.name"
-//               value: [${term}]
-//             }
-//           ]
-//         }
-//       ) {
-//         entities {
-//           entityLabel
-//           entityBundle
-//           ... on NodeArticle {
-//             body {
-//               value
-//             }
-//             fieldImage {
-//               url
-//             }
-//             queryFieldTags {
-//               entities {
-//                 entityId
-//                 entityLabel
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   `,
-// });
-
-//export default articleList;
+    `,
+  });
+};

@@ -44,12 +44,12 @@ class App extends Component {
                 return <UserApp />;
               }}
             </Route>
-            <Route path="/posts">
+            <Route path="/allposts">
               {() => {
                 return <AllPost />;
               }}
             </Route>
-            <Route path="/postsbyterm">
+            <Route path="/posts/:vocab/:term">
               {() => {
                 return <PostsByTerm />;
               }}
