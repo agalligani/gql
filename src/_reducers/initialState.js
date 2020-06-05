@@ -13,6 +13,9 @@ export const initialUser = {
 export const initialTaxonomy = {
   vocabularies: [{ vid: 1000, name: "dummy" }],
   terms: [],
+  currentVocabulary: null,
+  currentTerm: null,
+  postsByTerm: [],
 };
 
 export const initialAlerts = {

@@ -27,12 +27,16 @@ export default (state = initialTaxonomy, action) => {
 
     case REQUEST_POSTS_BY_TERM: {
       console.log("request posts by term", action);
-      return { state };
+      return {
+        ...state,
+        currentTerm: action.payload.term,
+        currentVocabulary: action.payload.vocabulary,
+      };
     }
 
     case RECEIVE_POSTS_BY_TERM: {
-      console.log("reCEIVE posts by term", action);
-      return { state };
+      console.log("reCEIVE posts by term", action.payload);
+      return { ...state, postsByTerm: action.payload };
     }
 
     case SET_CURRENT_TERM: {

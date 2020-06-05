@@ -5,11 +5,25 @@ const bundle = "article";
 const PUBLISHED = "1";
 let vocabulary = "tags";
 let term = "thiphif";
-
 export const articleListByTerm = gqlClient.query({
   query: gql`
     {
-      nodeQuery(limit: 10, offset: 0) {
+      nodeQuery(
+        limit: 10
+        offset: 0
+        filter: {
+          conditions: [
+            { operator: EQUAL, field: "type", value: ["article"] }
+            { operator: EQUAL, field: "status", value: ["1"] }
+            { operator: EQUAL, field: "field_tags.entity.vid", value: ["tags"] }
+            {
+              operator: EQUAL
+              field: "field_tags.entity.name"
+              value: ["thiphif"]
+            }
+          ]
+        }
+      ) {
         entities {
           entityLabel
           entityBundle

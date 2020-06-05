@@ -22,16 +22,18 @@ export const TagMenu = () => {
         All Posts
       </NavDropdown.Item>
       {taxonomy.terms
-        .filter((e) => e != null)
-        .map((term, key) => (
-          <NavDropdown.Item
-            key={key}
-            as={Link}
-            to={`/posts/tags/${term.entityLabel}`}
-          >
-            {term.entityLabel}
-          </NavDropdown.Item>
-        ))}
+        ? taxonomy.terms
+            .filter((e) => e != null)
+            .map((term, key) => (
+              <NavDropdown.Item
+                key={key}
+                as={Link}
+                to={`/posts/tags/${term.entityLabel}`}
+              >
+                {term.entityLabel}
+              </NavDropdown.Item>
+            ))
+        : null}
     </NavDropdown>
   );
 };

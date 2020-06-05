@@ -9,8 +9,9 @@ export const requestPostsByTerm = (payload) => ({
   payload: payload,
 });
 
-export const receivePostsByTerm = () => ({
+export const receivePostsByTerm = (data) => ({
   type: RECEIVE_POSTS_BY_TERM,
+  payload: data,
 });
 
 export function fetchPostsByTerm(payload) {
