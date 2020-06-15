@@ -13,11 +13,7 @@ class PostFormConnected extends Component {
       body,
       editing: false,
     };
-
-    this.props.dispatch(
-      addArticle(article, "http://www.example.com", basic_auth_token, session)
-    );
-
+    this.props.dispatch(addArticle(article, basic_auth_token, session));
     this.getTitle.value = "";
     this.getBody.value = "";
   };

@@ -16,7 +16,6 @@ export default (state = initialTaxonomy, action) => {
       return initialTaxonomy;
 
     case REQUEST_TAGS: {
-      console.log("action!", action);
       return state;
     }
 
@@ -25,7 +24,6 @@ export default (state = initialTaxonomy, action) => {
     }
 
     case REQUEST_POSTS_BY_TERM: {
-      console.log("request posts by term", action);
       return {
         ...state,
         currentTerm: action.payload.term,
@@ -34,12 +32,10 @@ export default (state = initialTaxonomy, action) => {
     }
 
     case RECEIVE_POSTS_BY_TERM: {
-      console.log("reCEIVE posts by term", action.payload);
       return { ...state, postsByTerm: action.payload };
     }
 
     case SET_CURRENT_TERM: {
-      console.log("action", action);
       return { ...state, currentArticleJSON: action.data, isLoading: false };
     }
     default:

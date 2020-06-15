@@ -2,7 +2,7 @@ import gqlClient from "../gqlClient";
 import { gql } from "apollo-boost";
 /** ./graphql/queries/articleList.js */
 let tagEntityId = 2;
-export const taxonomyList = gqlClient.query({
+export const taxonomyList = gqlClient().query({
   query: gql`
     {
       taxonomyTermQuery(

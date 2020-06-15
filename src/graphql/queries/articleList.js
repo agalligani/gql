@@ -1,7 +1,7 @@
 import gqlClient from "../gqlClient";
 import { gql } from "apollo-boost";
 /** ./graphql/queries/articleList.js */
-export const articleList = gqlClient.query({
+export const articleList = gqlClient().query({
   query: gql`
     {
       nodeQuery(

@@ -8,7 +8,7 @@ export const articleListByTerm = (
   limit = 10,
   type = "article"
 ) => {
-  return gqlClient.query({
+  return gqlClient().query({
     variables: {
       term: term,
       vocab: vocab,

@@ -6,6 +6,7 @@ import {
   RECEIVE_POSTS,
   RECEIVE_POST_JSON,
   DELETE_POST,
+  ADD_POST_GQL,
 } from "../_actions/_postActions";
 
 export default (state = initialPosts, action) => {
@@ -18,12 +19,10 @@ export default (state = initialPosts, action) => {
       return state;
 
     case REQUEST_POSTS: {
-      console.log("action", action);
       return state;
     }
 
     case RECEIVE_POSTS: {
-      console.log("action", action);
       return { ...state, data: action.data, isLoading: false };
     }
 
@@ -35,6 +34,14 @@ export default (state = initialPosts, action) => {
     case "LOAD_POSTS":
       console.log(action.payload);
       return action.payload;
+
+    case ADD_POST_GQL:
+      console.log(
+        action.baseURL,
+        action.basic_auth_token,
+        action.session_token
+      );
+      return { ...state, action };
 
     case "ADD_POST": {
       const node = JSON.stringify({

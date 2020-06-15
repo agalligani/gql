@@ -44,16 +44,12 @@ class App extends Component {
                 return <UserApp />;
               }}
             </Route>
-            <Route path="/allposts">
+            <Route exact path="/posts">
               {() => {
                 return <AllPost />;
               }}
             </Route>
-            <Route path="/posts/:vocab/:term">
-              {() => {
-                return <PostsByTerm />;
-              }}
-            </Route>
+            <Route exact path="/posts/:vocab/:term" component={PostsByTerm} />
             <Route path="/post/:nid/:action">
               <PostEditor />
             </Route>
