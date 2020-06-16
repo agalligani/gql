@@ -7,6 +7,9 @@ import {
   SET_CURRENT_TERM,
   REQUEST_POSTS_BY_TERM,
   RECEIVE_POSTS_BY_TERM,
+  RECEIVE_TAG_ARTICLE_REQUEST,
+  TAG_ARTICLE,
+
   /* change this ...*/
 } from "../_actions/_postActions";
 
@@ -38,6 +41,16 @@ export default (state = initialTaxonomy, action) => {
     case SET_CURRENT_TERM: {
       return { ...state, currentArticleJSON: action.data, isLoading: false };
     }
+
+    case RECEIVE_TAG_ARTICLE_REQUEST: {
+      console.log(action.payload);
+      return { state };
+    }
+
+    case TAG_ARTICLE: {
+      return { state };
+    }
+
     default:
       return state;
   }

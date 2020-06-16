@@ -47,6 +47,10 @@ export const articleListByTerm = (
           entities {
             entityLabel
             entityBundle
+            entityId
+            entityUrl {
+              path
+            }
             ... on NodeArticle {
               body {
                 value

@@ -13,6 +13,7 @@ export const taxonomyList = gqlClient().query({
         }
       ) {
         entities {
+          entityId
           entityLabel
         }
       }
