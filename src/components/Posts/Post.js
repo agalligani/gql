@@ -49,7 +49,10 @@ export const Post = (props) => {
           })}
         </ul>
       ) : null}
-      <div className="body">{body.value}</div>
+      <div className="teaser">
+        {body.value.split(/\s+/).slice(0, 20).join(" ")}...
+      </div>
+      {/* <div className="body">{body.value}</div> */}
       <div>
         <a href={entityUrl.path}>Read More</a>
       </div>

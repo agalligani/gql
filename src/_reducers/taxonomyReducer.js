@@ -44,11 +44,7 @@ export default (state = initialTaxonomy, action) => {
 
     case RECEIVE_TAG_ARTICLE_REQUEST: {
       console.log(action.payload);
-      return { state };
-    }
-
-    case TAG_ARTICLE: {
-      return { state };
+      return { ...state };
     }
 
     default:
